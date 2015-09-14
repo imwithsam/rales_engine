@@ -30,4 +30,10 @@ namespace :import do
     Merchant.import(filename)
     puts "Merchants imported."
   end
+
+  task transactions: :environment do
+    filename = File.join Rails.root, "data/transactions.csv"
+    Transaction.import(filename)
+    puts "Transactions imported."
+  end
 end
