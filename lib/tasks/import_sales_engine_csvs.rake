@@ -37,3 +37,10 @@ namespace :import do
     puts "Transactions imported."
   end
 end
+
+task import: ["import:customers",
+              "import:invoice_items",
+              "import:invoices",
+              "import:items",
+              "import:merchants",
+              "import:transactions"]
