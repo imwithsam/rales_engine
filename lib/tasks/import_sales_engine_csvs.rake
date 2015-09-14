@@ -12,4 +12,10 @@ namespace :import do
     InvoiceItem.import(filename)
     puts "Invoice Items imported."
   end
+
+  task invoices: :environment do
+    filename = File.join Rails.root, "data/invoices.csv"
+    Invoice.import(filename)
+    puts "Invoices imported."
+  end
 end
