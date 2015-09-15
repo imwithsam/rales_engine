@@ -8,7 +8,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def random
-    respond_with json: Merchant.order("RANDOM()").first
+    respond_with json: Merchant.random
   end
 
   def show
