@@ -1,4 +1,6 @@
 class Transaction < ActiveRecord::Base
+  include Finders
+
   def self.import(filename)
     CSV.foreach(filename, headers: true) do |row|
       transaction = find_by_id(row["id"]) || new

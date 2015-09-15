@@ -9,18 +9,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
-  def find
-    respond_with json: Merchant.find_like_by(attribute, params[attribute])
-  end
-
-  def find_all
-    respond_with json: Merchant.find_all_like_by(attribute, params[attribute])
-  end
-
-  def random
-    respond_with json: Merchant.random
-  end
-
   private
 
   def attribute
