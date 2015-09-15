@@ -7,7 +7,10 @@ class Merchant < ActiveRecord::Base
     end
   end
 
-  scope :find_like_by, -> (attribute, value) { where("#{attribute} LIKE ?", value).first }
+  scope :find_like_by, -> (attribute, value) {
+    where("#{attribute} LIKE ?", value).first }
+  scope :find_all_like_by, -> (attribute, value) {
+    where("#{attribute} LIKE ?", value) }
 
   private
 
