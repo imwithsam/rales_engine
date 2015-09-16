@@ -18,4 +18,17 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       end
     end
   end
+
+  describe "#merchant" do
+    it "returns the associated merchant" do
+      merchant = Merchant.create(name: "Acme Corporation")
+      item = merchant.items.create(name: "Bricks")
+
+      get :merchant, format: :json, id: item.id
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(result[:name]).to eq(merchant.name)
+    end
+  end
 end
