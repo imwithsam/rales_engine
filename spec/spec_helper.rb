@@ -17,6 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  require 'database_cleaner'
   require 'simplecov'
   SimpleCov.start
 

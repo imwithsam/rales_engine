@@ -30,6 +30,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'simplecov'
 end
 

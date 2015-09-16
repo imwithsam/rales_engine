@@ -16,10 +16,18 @@ class Api::V1::InvoicesController < ApplicationController
   end
 
   def transactions
-    respond_with Transaction.where(invoice_id: params[:id])
+    respond_with Invoice.find_by(params[:id]).transactions
   end
 
   def invoice_items
-    respond_with InvoiceItem.where(invoice_id: params[:id])
+    respond_with Invoice.find_by(params[:id]).invoice_items
+  end
+
+  def items
+    respond_with Invoice.find_by(params[:id]).items
+  end
+
+  def customer
+    respond_with Invoice.find_by(params[:id]).customer
   end
 end

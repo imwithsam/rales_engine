@@ -1,6 +1,9 @@
 class InvoiceItem < ActiveRecord::Base
   include Finders
 
+  belongs_to :invoice
+  belongs_to :item
+
   def self.import(filename)
     CSV.foreach(filename, headers: true) do |row|
       invoice_item = find_by_id(row["id"]) || new
