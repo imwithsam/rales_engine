@@ -8,11 +8,11 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find
-    respond_with Item.find_like_by(attribute, params[attribute])
+    respond_with Item.find_by(find_params)
   end
 
   def find_all
-    respond_with Item.find_all_like_by(attribute, params[attribute])
+    respond_with Item.where(find_params)
   end
 
   def random
@@ -25,5 +25,17 @@ class Api::V1::ItemsController < ApplicationController
 
   def merchant
     respond_with Item.find_by(id: params[:id]).merchant
+  end
+
+  private
+
+  def find_params
+    params.permit(:id,
+                  :name,
+                  :description,
+                  :unit_price,
+                  :merchant_id,
+                  :created_at,
+                  :updated_at)
   end
 end

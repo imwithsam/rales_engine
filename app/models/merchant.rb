@@ -16,6 +16,6 @@ class Merchant < ActiveRecord::Base
 
   def self.merchant_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:name)
+    params.permit(:name, :created_at, :updated_at)
   end
 end

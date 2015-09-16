@@ -16,6 +16,11 @@ class InvoiceItem < ActiveRecord::Base
 
   def self.invoice_item_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:item_id, :invoice_id, :quantity, :unit_price)
+    params.permit(:item_id,
+                  :invoice_id,
+                  :quantity,
+                  :unit_price,
+                  :created_at,
+                  :updated_at)
   end
 end
