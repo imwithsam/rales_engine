@@ -80,4 +80,17 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(result[:last_name]).to eq(customer.last_name)
     end
   end
+
+  describe "#merchant" do
+    it "returns the associated merchant" do
+      merchant = Merchant.create(name: "Acme Corporation")
+      invoice = merchant.invoices.create(status: "shipped")
+
+      get :merchant, format: :json, id: invoice.id
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(result[:name]).to eq(merchant.name)
+    end
+  end
 end
