@@ -2,7 +2,6 @@ require "application_responder"
 
 class ApplicationController < ActionController::Base
   before_filter :set_default_request_format
-  self.responder = ApplicationResponder
   respond_to :json
 
   # Prevent CSRF attacks by raising an exception.
