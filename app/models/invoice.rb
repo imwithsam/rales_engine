@@ -20,7 +20,13 @@ class Invoice < ActiveRecord::Base
   end
 
   def total
-    invoice_items.reduce(0) { |sum, invoice_item| sum + invoice_item.total }
+    @total ||= invoice_items.reduce(0) {
+      |sum, invoice_item| sum + invoice_item.total }
+  end
+
+  def total_quantity
+    @total_quantity ||= invoice_items.reduce(0) {
+      |sum, invoice_item| sum + invoice_item.quantity }
   end
 
   private

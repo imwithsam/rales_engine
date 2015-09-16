@@ -13,11 +13,20 @@ class Merchant < ActiveRecord::Base
   end
 
   def revenue
-    paid_invoices = invoices.select { |invoice| invoice.paid? }
-    paid_invoices.reduce(0) { |sum, paid_invoice| sum + paid_invoice.total }
+    @revenue ||= paid_invoices.reduce(0) {
+      |sum, paid_invoice| sum + paid_invoice.total }
+  end
+
+  def items_sold
+    @items_sold ||= paid_invoices.reduce(0) {
+      |sum, paid_invoice| sum + paid_invoice.total_quantity }
   end
 
   private
+
+  def paid_invoices
+    @paid_invoices ||= invoices.select { |invoice| invoice.paid? }
+  end
 
   def self.merchant_params(row)
     params = ActionController::Parameters.new(row.to_hash)

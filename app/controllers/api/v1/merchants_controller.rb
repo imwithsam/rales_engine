@@ -28,7 +28,6 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def most_revenue
-    quantity = params[:quantity].to_i
     respond_with Merchant
       .all
       .sort_by { |merchant| merchant.revenue }
@@ -36,7 +35,19 @@ class Api::V1::MerchantsController < ApplicationController
       .take(quantity)
   end
 
+  def most_items
+    respond_with Merchant
+      .all
+      .sort_by { |merchant| merchant.items_sold }
+      .reverse
+      .take(quantity)
+  end
+
   private
+
+  def quantity
+    params[:quantity].to_i
+  end
 
   def find_params
     params.permit(:id, :name, :created_at, :updated_at)
