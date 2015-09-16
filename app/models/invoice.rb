@@ -1,6 +1,7 @@
 class Invoice < ActiveRecord::Base
   include Finders
 
+  has_many :transactions
   belongs_to :merchant
 
   def self.import(filename)

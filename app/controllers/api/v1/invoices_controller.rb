@@ -14,4 +14,8 @@ class Api::V1::InvoicesController < ApplicationController
   def random
     respond_with Invoice.random
   end
+
+  def transactions
+    respond_with Transaction.where(invoice_id: params[:id])
+  end
 end
