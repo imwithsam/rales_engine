@@ -7,15 +7,15 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       merchant.items.create(
         name: "Explosive Tennis Balls",
         description: "Tickle your friends! Surprise your opponent!",
-        unit_price: "120000")
+        unit_price: 120000)
       merchant.items.create(
         name: "American Wrought Anvils",
         description: "They ring like a bell.",
-        unit_price: "10000")
+        unit_price: 10000)
       merchant.items.create(
         name: "Instant Tunnel",
         description: "For a smashing good time!",
-        unit_price: "1995")
+        unit_price: 1995)
 
       get :items, format: :json, id: merchant.id
       items = JSON.parse(response.body, symbolize_names: true)
