@@ -24,4 +24,22 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       end
     end
   end
+
+  describe "#invoice_items" do
+    it "returns a collection of associated invoice_items" do
+      invoice = Invoice.create(status: "shipped")
+      invoice.invoice_items.create(quantity: 1, unit_price: 100)
+      invoice.invoice_items.create(quantity: 3, unit_price: 300)
+      invoice.invoice_items.create(quantity: 2, unit_price: 200)
+
+      get :invoice_items, format: :json, id: invoice.id
+      invoice_items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoice_items.count).to eq(3)
+      invoice_items.each do |invoice_item|
+        expect(invoice_item[:invoice_id]).to eq(invoice.id)
+      end
+    end
+  end
 end
