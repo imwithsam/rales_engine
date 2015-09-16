@@ -12,6 +12,11 @@ class Merchant < ActiveRecord::Base
     end
   end
 
+  def revenue
+    paid_invoices = invoices.select { |invoice| invoice.paid? }
+    paid_invoices.reduce(0) { |sum, paid_invoice| sum + paid_invoice.total }
+  end
+
   private
 
   def self.merchant_params(row)

@@ -15,6 +15,14 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def paid?
+    transactions.exists?(result: "success")
+  end
+
+  def total
+    invoice_items.reduce(0) { |sum, invoice_item| sum + invoice_item.total }
+  end
+
   private
 
   def self.invoice_params(row)

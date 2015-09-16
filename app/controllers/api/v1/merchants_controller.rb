@@ -27,6 +27,15 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with Merchant.find_by(id: params[:id]).invoices
   end
 
+  def most_revenue
+    quantity = params[:quantity].to_i
+    respond_with Merchant
+      .all
+      .sort_by { |merchant| merchant.revenue }
+      .reverse
+      .take(quantity)
+  end
+
   private
 
   def find_params
