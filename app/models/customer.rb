@@ -2,6 +2,7 @@ class Customer < ActiveRecord::Base
   include Finders
 
   has_many :invoices
+  has_many :transactions, through: :invoices
 
   def self.import(filename)
     CSV.foreach(filename, headers: true) do |row|

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get "customers/random", to: "customers#random"
       resources :customers, only: [:show]
       get "customers/invoices", to: "customers#invoices"
+      get "customers/transactions", to: "customers#transactions"
 
       get "invoice_items/find", to: "invoice_items#find"
       get "invoice_items/find_all", to: "invoice_items#find_all"

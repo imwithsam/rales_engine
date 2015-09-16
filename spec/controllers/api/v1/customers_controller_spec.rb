@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::CustomersController, type: :controller do
   describe "#invoices" do
     it "returns a collection of associated invoices" do
-      customer = Customer.create(
-        first_name: "Jane",
-        last_name: "Doe")
+      customer = Customer.create(first_name: "Jane", last_name: "Doe")
       customer.invoices.create(status: "shipped")
       customer.invoices.create(status: "shipped")
       customer.invoices.create(status: "shipped")
@@ -23,24 +21,24 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
   xdescribe "#transactions" do
     it "returns a collection of associated transactions" do
-      invoice = Invoice.create(status: "shipped")
-      invoice.transactions.create(
+      customer = Customer.create(first_name: "Jane", last_name: "Doe")
+      customer.transactions.create(
         credit_card_number: "4242424242424242",
         result: "failed")
-      invoice.transactions.create(
+      customer.transactions.create(
         credit_card_number: "4242424242424242",
         result: "failed")
-      invoice.transactions.create(
+      customer.transactions.create(
         credit_card_number: "4242424242424242",
         result: "success")
 
-      get :transactions, format: :json, id: invoice.id
+      get :transactions, format: :json, id: customer.id
       transactions = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:success)
       expect(transactions.count).to eq(3)
       transactions.each do |transaction|
-        expect(transaction[:invoice_id]).to eq(invoice.id)
+        expect(transaction[:customer_id]).to eq(customer.id)
       end
     end
   end

@@ -18,4 +18,8 @@ class Api::V1::CustomersController < ApplicationController
   def invoices
     respond_with Customer.find_by(id: params[:id]).invoices
   end
+
+  def transactions
+    respond_with Customer.find_by(id: params[:id]).transactions
+  end
 end
