@@ -1,6 +1,9 @@
 class Merchant < ActiveRecord::Base
   include Finders
 
+  has_many :items
+  has_many :invoices
+
   def self.import(filename)
     CSV.foreach(filename, headers: true) do |row|
       merchant = find_by_id(row["id"]) || new
