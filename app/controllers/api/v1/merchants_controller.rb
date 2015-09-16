@@ -8,11 +8,11 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def find
-    respond_with Merchant.find_like_by(attribute, params[attribute])
+    respond_with Merchant.find_by(find_params)
   end
 
   def find_all
-    respond_with Merchant.find_all_like_by(attribute, params[attribute])
+    respond_with Merchant.where(find_params)
   end
 
   def random
@@ -25,5 +25,11 @@ class Api::V1::MerchantsController < ApplicationController
 
   def invoices
     respond_with Merchant.find_by(id: params[:id]).invoices
+  end
+
+  private
+
+  def find_params
+    params.permit(:id, :name, :created_at, :updated_at)
   end
 end

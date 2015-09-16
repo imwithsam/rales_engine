@@ -15,6 +15,10 @@ class Transaction < ActiveRecord::Base
 
   def self.transaction_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:invoice_id, :credit_card_number, :result)
+    params.permit(:invoice_id,
+                  :credit_card_number,
+                  :result,
+                  :created_at,
+                  :updated_at)
   end
 end

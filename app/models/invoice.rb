@@ -19,6 +19,6 @@ class Invoice < ActiveRecord::Base
 
   def self.invoice_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:customer_id, :merchant_id, :status)
+    params.permit(:customer_id, :merchant_id, :status, :created_at, :updated_at)
   end
 end

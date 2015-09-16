@@ -16,6 +16,6 @@ class Customer < ActiveRecord::Base
 
   def self.customer_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:first_name, :last_name)
+    params.permit(:first_name, :last_name, :created_at, :updated_at)
   end
 end

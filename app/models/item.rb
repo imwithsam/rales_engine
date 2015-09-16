@@ -17,6 +17,11 @@ class Item < ActiveRecord::Base
 
   def self.item_params(row)
     params = ActionController::Parameters.new(row.to_hash)
-    params.permit(:name, :description, :unit_price, :merchant_id)
+    params.permit(:name,
+                  :description,
+                  :unit_price,
+                  :merchant_id,
+                  :created_at,
+                  :updated_at)
   end
 end
