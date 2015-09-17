@@ -27,7 +27,19 @@ class Api::V1::ItemsController < ApplicationController
     respond_with Item.find_by(id: params[:id]).merchant
   end
 
+  def most_revenue
+    respond_with Item
+      .all
+      .sort_by { |item| item.total_revenue }
+      .reverse
+      .take(quantity)
+  end
+
   private
+
+  def quantity
+    params[:quantity].to_i
+  end
 
   def find_params
     params.permit(:id,

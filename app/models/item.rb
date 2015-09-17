@@ -19,7 +19,23 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def total_revenue
+    @total_revenue ||= paid_invoices.reduce(0) do |total, invoice|
+      total + invoice.invoice_items.reduce(0) do |sum, invoice_item|
+        if invoice_item.item_id == id
+          sum + invoice_item.total
+        else
+          sum
+        end
+      end
+    end
+  end
+
   private
+
+  def paid_invoices
+    @paid_invoices ||= invoices.select { |invoice| invoice.paid? }
+  end
 
   def self.item_params(row)
     params = ActionController::Parameters.new(row.to_hash)
