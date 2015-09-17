@@ -18,14 +18,14 @@ class Merchant < ActiveRecord::Base
       |sum, paid_invoice| sum + paid_invoice.total }
   end
 
+  def revenue_on(date)
+    paid_invoices.select { |invoice| invoice.created_at == date }.reduce(0) {
+      |sum, invoice| sum + invoice.total }
+  end
+
   def items_sold
     @items_sold ||= paid_invoices.reduce(0) {
       |sum, paid_invoice| sum + paid_invoice.total_quantity }
-  end
-
-  def revenue(date)
-    paid_invoices.select { |invoice| invoice.created_at == date }.reduce(0) {
-      |sum, invoice| sum + invoice.total }
   end
 
   private

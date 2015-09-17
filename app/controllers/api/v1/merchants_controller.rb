@@ -45,13 +45,16 @@ class Api::V1::MerchantsController < ApplicationController
 
   def total_revenue
     respond_with total_revenue: Merchant.all.reduce(0) {
-      |sum, merchant| sum + merchant.revenue(params[:date]) }
+      |sum, merchant| sum + merchant.revenue_on(params[:date]) }
   end
 
   def revenue
     if params[:date]
       respond_with revenue:
-        Merchant.find_by(id: params[:id]).revenue(params[:date])
+        Merchant.find_by(id: params[:id]).revenue_on(params[:date])
+    else
+      respond_with revenue:
+        Merchant.find_by(id: params[:id]).revenue
     end
   end
 
