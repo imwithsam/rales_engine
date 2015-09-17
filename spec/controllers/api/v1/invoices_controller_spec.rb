@@ -1,6 +1,80 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::InvoicesController, type: :controller do
+  describe "#index" do
+    it "returns all invoices" do
+      Invoice.create(status: "shipped")
+      Invoice.create(status: "canceled")
+      Invoice.create(status: "canceled")
+
+      get :index, format: :json
+      invoices = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoices.count).to eq(3)
+    end
+  end
+
+  describe "#show" do
+    it "returns a invoice" do
+      invoice_1 = Invoice.create(status: "shipped")
+      Invoice.create(status: "canceled")
+      Invoice.create(status: "canceled")
+
+      get :show, format: :json, id: invoice_1.id
+      invoice = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoice[:status]).to eq(invoice_1.status)
+    end
+  end
+
+  describe "#find" do
+    it "finds a invoice by status" do
+      invoice_1 = Invoice.create(status: "shipped")
+      Invoice.create(status: "canceled")
+      Invoice.create(status: "canceled")
+
+      get :find, format: :json, status: invoice_1.status
+      invoice = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoice[:status]).to eq(invoice_1.status)
+    end
+  end
+
+  describe "#find_all" do
+    it "finds all invoices by status" do
+      invoice_1 = Invoice.create(status: "shipped")
+      Invoice.create(status: "shipped")
+      Invoice.create(status: "canceled")
+
+      get :find_all, format: :json, status: invoice_1.status
+      invoices = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoices.count).to eq(2)
+    end
+  end
+
+  describe "#random" do
+    it "returns a random invoice" do
+      invoice_1 = Invoice.create(status: "shipped")
+      invoice_2 = Invoice.create(status: "canceled")
+      invoice_3 = Invoice.create(status: "canceled")
+
+      get :random, format: :json
+      invoice = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:success)
+      expect(invoice[:status]).to satisfy do |status|
+        [invoice_1.status,
+         invoice_2.status,
+         invoice_3.status].include?(status)
+      end
+    end
+  end
+
   describe "#transactions" do
     it "returns a collection of associated transactions" do
       invoice = Invoice.create(status: "shipped")
