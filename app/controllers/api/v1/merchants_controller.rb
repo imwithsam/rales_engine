@@ -43,6 +43,18 @@ class Api::V1::MerchantsController < ApplicationController
       .take(quantity)
   end
 
+  def total_revenue
+    respond_with total_revenue: Merchant.all.reduce(0) {
+      |sum, merchant| sum + merchant.revenue(params[:date]) }
+  end
+
+  def revenue
+    if params[:date]
+      respond_with revenue:
+        Merchant.find_by(id: params[:id]).revenue(params[:date])
+    end
+  end
+
   private
 
   def quantity
