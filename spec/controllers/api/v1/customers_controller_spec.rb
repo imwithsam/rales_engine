@@ -93,16 +93,17 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     end
   end
 
-  xdescribe "#transactions" do
+  describe "#transactions" do
     it "returns a collection of associated transactions" do
       customer = Customer.create(first_name: "Jane", last_name: "Doe")
-      customer.transactions.create(
+      invoice = customer.invoices.create(status: "shipped")
+      invoice.transactions.create(
         credit_card_number: "4242424242424242",
         result: "failed")
-      customer.transactions.create(
+      invoice.transactions.create(
         credit_card_number: "4242424242424242",
         result: "failed")
-      customer.transactions.create(
+      invoice.transactions.create(
         credit_card_number: "4242424242424242",
         result: "success")
 
@@ -112,7 +113,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       expect(response).to have_http_status(:success)
       expect(transactions.count).to eq(3)
       transactions.each do |transaction|
-        expect(transaction[:customer_id]).to eq(customer.id)
+        expect(transaction[:invoice_id]).to eq(invoice.id)
       end
     end
   end
