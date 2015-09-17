@@ -18,6 +18,10 @@ class InvoiceItem < ActiveRecord::Base
     end
   end
 
+  def total
+    quantity * unit_price
+  end
+
   private
 
   def self.invoice_item_params(row)
